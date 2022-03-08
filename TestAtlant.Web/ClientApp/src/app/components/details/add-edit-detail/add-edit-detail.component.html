@@ -1,0 +1,69 @@
+<form class="k-form" [formGroup]="this.detailModelForm">
+  <fieldset class="k-form-fieldset">
+    <legend class="k-form-legend">Добавление детали</legend>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="row">
+          <kendo-formfield class="col-xl-6">
+            <kendo-label [for]="nomCode" text="Номенклатурный код"></kendo-label>
+            <kendo-textbox formControlName="NomCode"
+                           [clearButton]="true"
+                           #nomCode
+                           required></kendo-textbox>
+
+            <kendo-formerror>Ошибка: Номенклатурный код обязателен для заполнения</kendo-formerror>
+          </kendo-formfield>
+        </div>
+
+        <div class="row">
+          <kendo-formfield class="col-xl-6">
+            <kendo-label [for]="name" text="Наименование"></kendo-label>
+            <kendo-textbox formControlName="Name"
+                           [clearButton]="true"
+                           #nomCode
+                           required></kendo-textbox>
+
+            <kendo-formerror>Ошибка: наименование обязателено для заполнения</kendo-formerror>
+          </kendo-formfield>
+        </div>
+
+        <div class="row">
+          <kendo-formfield formGroupName="Storekeeper" class="col-xl-6">
+            <kendo-label [for]="storekeeper"
+                         text="Кладовщик"></kendo-label>
+            <div style="display: flex;">
+              <kendo-textbox formControlName="Name"
+                             #storekeeper
+                             required>
+              </kendo-textbox>
+              <button class="btn btn-danger btn-sm btn-choise" (click)="openDialogStorekeeper()">С</button>
+            </div>
+          </kendo-formfield>
+        </div>
+
+        <div class="row">
+          <kendo-formfield class="col-xl-6">
+            <kendo-label [for]="amount" text="Количество"></kendo-label>
+            <kendo-numerictextbox formControlName="Amount"
+                           format="0"
+                           [step]="1"
+                           [min]="0"
+                           #nomCode
+                           required></kendo-numerictextbox>
+
+            <kendo-formerror>Ошибка: количество обязателено для заполнения</kendo-formerror>
+          </kendo-formfield>
+        </div>
+      </div>
+    </div>
+
+    <dialog-catalog-storekeeper (returnSelectedStorekeeper)="setStorekeeper($event)" *ngIf="isDialogStorekeeper" (cancel)="closeDialogStorekeeper($event)"></dialog-catalog-storekeeper>
+
+    <div class="k-form-buttons" style="margin-top: 10px;">
+      <button class="btn btn-primary btn-sm" [disabled]="!detailModelForm.valid" (click)="save()">Сохранить</button>
+      <button class="btn btn-light btn-sm" (click)="this.detailService.isAddEditDetail = false" [routerLink]="['/details']">Закрыть</button>
+    </div>
+  </fieldset>
+</form>
+

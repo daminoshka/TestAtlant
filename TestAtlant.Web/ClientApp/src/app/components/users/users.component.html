@@ -1,0 +1,11 @@
+<div class="card mt-4">
+  <h4 class="card-header">Администратор</h4>
+  <div class="card-body">
+    <!--<p>This page can be accessed <u>only by administrators</u>.</p>-->
+    <p class="mb-1">Список всех пользователей (только для администратора):</p>
+    <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+    <ul *ngIf="users">
+      <li *ngFor="let user of users">{{user.lastName}} {{user.firstName}} {{user.patronymic}}, login: {{user.username}}</li>
+    </ul>
+  </div>
+</div>

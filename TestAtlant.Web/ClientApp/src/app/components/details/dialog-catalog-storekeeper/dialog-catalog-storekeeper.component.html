@@ -1,0 +1,25 @@
+<kendo-window title="Справочник кладовщиков"
+              (close)="close()"
+              [minWidth]="500"
+              [style.max-height.px]="500"
+              [width]="500"
+              [resizable]="false">
+  <kendo-window-titlebar>
+    <div style="font-size: 18px; line-height: 1.3em;">
+      <span class="k-icon k-i-aggregate-fields"></span> Справочник кладовщиков
+    </div>
+    <button class="float-right" kendoWindowCloseAction></button>
+  </kendo-window-titlebar>
+
+
+  <catalog-storekeeper [isDialog]="true" (returnSelectedStorekeeper)="setStorekeeper($event)"></catalog-storekeeper>
+
+  <div class="text-right" style="margin-top: 10px">
+    <button type="button" class="k-button k-primary" (click)="submit()" [disabled]="!selectedStorekeeper.Id">
+      Выбрать
+    </button>
+    <button type="button" class="k-button" (click)="close()">
+      Отмена
+    </button>
+  </div>
+</kendo-window>

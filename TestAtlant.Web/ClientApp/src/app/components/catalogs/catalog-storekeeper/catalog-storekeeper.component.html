@@ -1,0 +1,95 @@
+<router-outlet style="margin-bottom: 5px;"></router-outlet>
+<form novalidate #myForm="ngForm">
+  <kendo-grid #gridContractors
+              [data]="this.gridStorekeeperData"
+              [pageSize]="pageSize"
+              [skip]="skip"
+              [pageable]="true"
+              (pageChange)="pageChange($event)"
+              [sortable]="true"
+              [sort]="sortDescriptor"
+              (sortChange)="handleSortChange($event)"
+              [filter]="filter"
+              [filterable]="true"
+              (filterChange)="filterChange($event)"
+              [selectable]="selectableSettings"
+              (selectionChange)="selectionChange($event)"
+              style="height: 100%;"
+              (edit)="editHandler($event)"
+              (cancel)="cancelHandler($event)"
+              (save)="saveHandler($event)"
+              (remove)="removeHandler($event)"
+              (add)="addHandler($event, myForm)">
+
+    <ng-template kendoGridToolbarTemplate [position]="position" let-position="position" *ngIf="!isDialog">
+      <button kendoGridAddCommand class="btn btn-success btn-sm" type="button">Добавить</button>
+    </ng-template>
+
+    <kendo-grid-checkbox-column width="10"></kendo-grid-checkbox-column>
+
+    <kendo-grid-column field="Surname" title="Фамилия" width="20" filter="text">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+        <input [(ngModel)]="dataItem.Surname"
+               kendoGridFocusable
+               name="Surname"
+               class="k-textbox"
+               type="text" />
+      </ng-template>
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{dataItem.Surname}}
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="Firstname" title="Имя" width="20" filter="text">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+        <input [(ngModel)]="dataItem.Firstname"
+               kendoGridFocusable
+               name="Firstname"
+               class="k-textbox"
+               type="text" />
+      </ng-template>
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{dataItem.Firstname}}
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="Lastname" title="Отчество" width="20" filter="text">
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+        <input [(ngModel)]="dataItem.Lastname"
+               kendoGridFocusable
+               name="Lastname"
+               class="k-textbox"
+               type="text" />
+      </ng-template>
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{dataItem.Lastname}}
+      </ng-template>
+    </kendo-grid-column>
+
+
+
+    <kendo-grid-command-column title="Команда" width="30" *ngIf="!isDialog">
+      <ng-template kendoGridCellTemplate let-isNew="isNew">
+        <button kendoGridEditCommand type="button" [primary]="true">
+          Редактировать
+        </button>
+        <button kendoGridRemoveCommand type="button">Удалить</button>
+        <button kendoGridSaveCommand
+                type="button"
+                [disabled]="myForm.invalid || myForm.pristine">
+          {{ isNew ? "Добавить" : "Обновить" }}
+        </button>
+        <button kendoGridCancelCommand type="button">
+          {{ isNew ? "Отменить изменения" : "Отмена" }}
+        </button>
+      </ng-template>
+    </kendo-grid-command-column>
+
+    <ng-template kendoGridNoRecordsTemplate>
+      Нет записей. <a href="#" (click)="refresh()">Нажмите здесь, чтобы обновить страницу.</a>.
+      <ngx-spinner bdColor="rgba(0, 0, 0, 0.7)" size="medium" color="#fff" type="ball-atom" [fullScreen]="false"><p style="color: white"></ngx-spinner>
+    </ng-template>
+
+
+  </kendo-grid>
+</form>
